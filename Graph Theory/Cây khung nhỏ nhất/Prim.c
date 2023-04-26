@@ -7,7 +7,7 @@ struct Graph{
     int M[MaxVertices][MaxVertices];
     int NumberOf;
 };
-void InitGraph(Graph *G,int NumberOf){
+void InitGraph(struct Graph *G,int NumberOf){
     G->NumberOf = NumberOf;
     for(int i=1;i<=G->NumberOf;i++){
         for(int j=1;j<=G->NumberOf;j++){
@@ -15,14 +15,14 @@ void InitGraph(Graph *G,int NumberOf){
         }
     }
 }
-void AddEdge(Graph *G,int x,int y,int w){
+void AddEdge(struct Graph *G,int x,int y,int w){
     G->M[x][y] = w;
     G->M[y][x] = w;
 }
-int Adjacent(Graph G,int x,int y){
+int Adjacent(struct Graph G,int x,int y){
     return G.M[x][y] == 1;
 }
-int Degree(Graph G,int Number){
+int Degree(struct Graph G,int Number){
     int Count =0;
     for(int i=0;i<=G.NumberOf;i++){
         if(G.M[i][Number]==1){
@@ -35,7 +35,7 @@ int Degree(Graph G,int Number){
 int Mark[MaxElement]; // Mảng đánh dấu các đỉnh đã được thêm
 int Pi[MaxElement]; // Mảng lưu giá trị Pi của các đỉnh
 int P[MaxElement]; // Mảng lưu đỉnh cha của các đỉnh
-int Prim(Graph *G,Graph *T,int s){
+int Prim(struct Graph *G,struct Graph *T,int s){
     int i,u,v,x;
     // Khởi tạo các mảng Pi, P, và Mark
     for(u=1;u<=G->NumberOf;u++){
@@ -82,7 +82,7 @@ int Prim(Graph *G,Graph *T,int s){
     return SumWeight;
 }
 int main(){
-    Graph G,T;
+    struct Graph G,T;
     freopen("Prim.txt","r",stdin);
     int n,m;
     scanf("%d%d",&n,&m);

@@ -5,15 +5,15 @@ struct Graph{
     int M[MaxElement][MaxElement];
     int Amount;
 };
-void InitGraph(Graph &G,int Amount){
-    G.Amount = Amount;
-    for(int i=1;i<=G.Amount;i++){
-        for(int j=1;j<=G.Amount;j++){
-            G.M[i][j] = NOEDGE;
+void InitGraph(struct Graph *G,int Amount){
+    G->Amount = Amount;
+    for(int i=1;i<=G->Amount;i++){
+        for(int j=1;j<=G->Amount;j++){
+            G->M[i][j] = NOEDGE;
         }
     }
 }
-void AddEdge(Graph *G,int x,int y,int w){
+void AddEdge(struct Graph *G,int x,int y,int w){
     G->M[x][y] = w;
     G->M[y][x] = w;
 }
@@ -21,7 +21,7 @@ void AddEdge(Graph *G,int x,int y,int w){
 int Mark[MaxElement];
 int Pi[MaxElement];
 int P[MaxElement];
-void MooreDijkstra(Graph *G,int s){
+void MooreDijkstra(struct Graph *G,int s){
     int v;
     for(int v=1;v<=G->Amount;v++){
         Pi[v]=OO;
@@ -49,11 +49,11 @@ void MooreDijkstra(Graph *G,int s){
     }
 }
 int main(){
-    Graph G;
+    struct Graph G;
     freopen("MooreDijkstra.txt","r",stdin);
     int n,m;
     scanf("%d%d",&n,&m);
-    InitGraph(G,n);
+    InitGraph(&G,n);
     int u,v,w;
     for(int i=1;i<=m;i++){
         scanf("%d%d%d",&u,&v,&w);

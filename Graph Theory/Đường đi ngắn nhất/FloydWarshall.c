@@ -6,21 +6,21 @@ struct Graph{
     int M[MaxElement][MaxElement];
     int NumberOf;
 };
-void InitGraph(Graph &G,int NumberOf){
-    G.NumberOf = NumberOf;
-    for(int i=1;i<=G.NumberOf;i++){
-        for(int j=1;j<=G.NumberOf;j++){
-            G.M[i][j] = NOEDGE;
+void InitGraph(struct Graph *G,int NumberOf){
+    G->NumberOf = NumberOf;
+    for(int i=1;i<=G->NumberOf;i++){
+        for(int j=1;j<=G->NumberOf;j++){
+            G->M[i][j] = NOEDGE;
         }
     }
 }
-void AddEdge(Graph *G,int x,int y,int w){
+void AddEdge(struct Graph *G,int x,int y,int w){
     G->M[x][y] = w;
 }
-int Adjacent(Graph G,int x,int y){
+int Adjacent(struct Graph G,int x,int y){
     return G.M[x][y] == 1;
 }
-int Degree(Graph G,int Number){
+int Degree(struct Graph G,int Number){
     int Count =0;
     for(int i=0;i<=G.NumberOf;i++){
         if(G.M[i][Number]==1){
@@ -31,7 +31,7 @@ int Degree(Graph G,int Number){
 }
 int Pi[MaxElement][MaxElement];
 int Next[MaxElement][MaxElement];
-int FloydWarshall(Graph *G){
+int FloydWarshall(struct Graph *G){
     int u,v,k;
     for(u=1;u<=G->NumberOf;u++){
         for(v=1;v<=G->NumberOf;v++){
@@ -70,7 +70,7 @@ int FloydWarshall(Graph *G){
         return 0;
     }
 }
-void PrintResult(Graph *G){
+void PrintResult(struct Graph *G){
     int u,v;
     for(u=1;u<=G->NumberOf;u++){
         for(v=1;v<=G->NumberOf;v++){
@@ -89,11 +89,11 @@ void PrintResult(Graph *G){
     }
 }
 int main(){
-    Graph G;
+    struct Graph G;
     freopen("FloydWarshall.txt","r",stdin);
     int n,m;
     scanf("%d%d",&n,&m);
-    InitGraph(G,n);
+    InitGraph(&G,n);
     int u,v,w;
     for(int i=1;i<=m;i++){
         scanf("%d%d%d",&u,&v,&w);
