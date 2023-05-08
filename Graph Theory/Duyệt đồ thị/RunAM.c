@@ -146,5 +146,8 @@ int main(int argc, char const *argv[]){
         scanf("%d%d",&u,&v);
         AddEdge(&G,u,v);
     }
-    PrintDFSRecursion(G);
+    Rank(&G);
+    for(int i=1;i<=n;i++){
+        printf("%d ",R[i]);
+    }
 }

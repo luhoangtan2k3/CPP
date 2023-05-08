@@ -20,7 +20,7 @@ void AddEdge(struct Graph *G,int u,int v,int w){
 #define OO 99999
 int Pi[MaxElement];
 int P[MaxElement];
-int BellmanFord(struct Graph *G,int s){
+void BellmanFord(struct Graph *G,int s){
     int u,v,w;
     for(u=1;u<=G->n;u++){
         Pi[u]=OO;
@@ -45,7 +45,7 @@ int BellmanFord(struct Graph *G,int s){
         int v = G->Edges[i].v;
         int w = G->Edges[i].w;
         if((Pi[u]+w<Pi[v])){
-            NegativeCycle =1;
+            NegativeCycle = 1;
             break;
         }
     }

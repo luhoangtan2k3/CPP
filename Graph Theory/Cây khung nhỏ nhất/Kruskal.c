@@ -26,12 +26,12 @@ int FindRoot(int u){
 }
 int Kruskal(struct Graph *G,struct Graph *T){
 	int i,j;
-	for(i=1;i<G->m;i++){
-		for(j=i+1;j<=G->m;j++){
-			if(G->Edges[i-1].w>G->Edges[j-1].w){
-				struct Edge Temp = G->Edges[i-1];
-				G->Edges[i-1] = G->Edges[j-1];
-				G->Edges[j-1] = Temp;
+	for(i=0;i<G->m-1;i++){
+		for(j=i+1;j<G->m;j++){
+			if(G->Edges[i].w>G->Edges[j].w){
+				struct Edge Temp = G->Edges[i];
+				G->Edges[i] = G->Edges[j];
+				G->Edges[j] = Temp;
 			}
 		}
 	}
