@@ -1,25 +1,25 @@
 #include<stdio.h>
 #include<string.h>
 #define MAXLENGTH 50
-typedef struct{
+struct Monhoc{
     float Toan;
     float Ly;
     float Hoa;
-}Monhoc;
-typedef struct{
+};
+struct Thongtin{
     char Ten[MAXLENGTH];
     char ID[MAXLENGTH];
     float Diemtrungbinh;
     int Tuoi;
-}Thongtin;
-typedef struct{
+};
+struct Sinhvien{
     Monhoc Tohopmonhoc;
     Thongtin Thongtin;
-}Sinhvien;
-typedef struct{
+};
+struct Lophoc{
     Sinhvien Danhsachsinhvien[MAXLENGTH];
     int Soluong;
-}Lophoc;
+};
 void Makenulllist(Lophoc *Class){
     Class->Soluong = 0;
 }
