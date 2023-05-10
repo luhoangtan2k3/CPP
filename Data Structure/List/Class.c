@@ -193,9 +193,9 @@ void Thaydoi(Lophoc *Class){
     printf("Bạn muốn thêm hay xóa sinh viên.\n");
     Return:
     printf("Nhập (1) nếu thêm, (2) nếu xóa và (-1) để thoát.\n");
-    int Selection;
-    scanf("%d",&Selection);
-    if(Selection==1){
+    int Select;
+    scanf("%d",&Select);
+    if(Select==1){
         getchar();
         Sinhvien Element = Addstudent();
         printf("Nhập vào vị trí cần chèn vào.\n");
@@ -203,7 +203,7 @@ void Thaydoi(Lophoc *Class){
         scanf("%d",&Position);
         Insert(Class,Position,Element);
         printf("Đã thêm sinh viên vào danh sách.\n");
-    }else if(Selection==2){
+    }else if(Select==2){
         printf("Nhập mã số sinh viên cần xóa.\n");
         char ID[MAXLENGTH];
         getchar();
@@ -218,7 +218,7 @@ void Thaydoi(Lophoc *Class){
             i = NextPosition(*Class,i);
         }
         printf("Không tìm thấy sinh viên cần xóa.\n");
-    }else if(Selection==-1){
+    }else if(Select==-1){
         printf("Đã hủy thao tác này.\n");
     }else{
         printf("Bạn nhập sai thao tác, mời nhập lại.\n");
@@ -227,10 +227,45 @@ void Thaydoi(Lophoc *Class){
 }
 int main(int argc, char const *argv[]){
     Lophoc Class;
-    Readlist(&Class);
+    Root:
+    int Select;
+    printf("DANH SÁCH QUẢN LÝ SINH VIÊN LỚP HỌC.\n");
+    printf("1 - Nhập vào danh sách sinh viên.\n");
+    printf("2 - Xuất danh sách sinh viên.\n");
+    printf("3 - Sắp xếp danh sách sinh viên theo thứ tự.\n");
+    printf("4 - Tìm kiếm sinh viên bằng mã số sinh viên.\n");
+    printf("5 - Phân loại sinh viên theo học lực.\n");
+    printf("6 - Chỉnh sửa danh sách sinh viên(thêm hoặc xóa).\n");
+    printf("0 - Nhập 0 để thoát.\n");
+    printf("Nhập vào thao tác của bạn.\n");
+    scanf("%d",&Select);
+    switch(Select){
+        case 1:
+            Readlist(&Class);
+            break;
+        case 2:
+            Printlist(Class);
+            break;
+        case 3:
+            Xephang(&Class);
+            Printlist(Class);
+            break;
+        case 4:
+            Timsinhvien(Class);
+            break;
+        case 5:
+            Hocluc(Class);
+            break;
+        case 6:
+            Thaydoi(&Class);
+            break;
+        case 0:
+            printf("Thoát chương trình.\n");
+            break;
+        default:
+            printf("Không có thao tác này.\n");
+    }
     printf("\n");
-    Printlist(Class);
-    Thaydoi(&Class);
-    printf("\n");
-    Printlist(Class);
+    if(Select!=0) goto Root;
+    return 0;
 }
