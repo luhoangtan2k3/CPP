@@ -47,20 +47,57 @@ Sinhvien Retrieve(Lophoc Class, int Position){
 float Diemtrungbinh(float T, float L, float H){
     return (T+L+H)/3;
 }
-Sinhvien Addstudent(){
+int Exist(Lophoc Class, char ID[]){
+    Sinhvien Element;
+    int i = Firstlist(Class);
+    while(i!=Lastlist(Class)){
+        Element = Retrieve(Class,i);
+        if(strcmp(ID,Element.Thongtin.ID)==0){
+            return 1;
+        }
+        i = NextPosition(Class,i);
+    }
+    return 0;
+}
+Sinhvien Addstudent(Lophoc Class){
     Sinhvien Element;
     printf("Nhập vào tên sinh viên:\n");
     gets(Element.Thongtin.Ten);
+    ID:
     printf("Nhập vào id sinh viên:\n");
     gets(Element.Thongtin.ID);
+    if(Exist(Class,Element.Thongtin.ID)){
+        printf("Đã tồn tại ID này!!!.\n");
+        goto ID;
+    }
+    Tuoi:
     printf("Nhập vào tuổi sinh viên:\n");
     scanf("%d",&Element.Thongtin.Tuoi);
+    if(Element.Thongtin.Tuoi<1){
+        printf("Tuổi không hợp lệ!!!.\n");
+        goto Tuoi;
+    }
+    Toan:
     printf("Nhập vào điểm toán:\n");
     scanf("%f",&Element.Tohopmonhoc.Toan);
+    if(Element.Tohopmonhoc.Toan<0||Element.Tohopmonhoc.Toan>10){
+        printf("Điểm không hợp lệ!!!.\n");
+        goto Toan;
+    }
+    Ly:
     printf("Nhập vào điểm lý:\n");
     scanf("%f",&Element.Tohopmonhoc.Ly);
+    if(Element.Tohopmonhoc.Ly<0||Element.Tohopmonhoc.Ly>10){
+        printf("Điểm không hợp lệ!!!.\n");
+        goto Ly;
+    }
+    Hoa:
     printf("Nhập vào điểm hóa:\n");
     scanf("%f",&Element.Tohopmonhoc.Hoa);
+    if(Element.Tohopmonhoc.Hoa<0||Element.Tohopmonhoc.Hoa>10){
+        printf("Điểm không hợp lệ!!!.\n");
+        goto Hoa;
+    }
     float T = Element.Tohopmonhoc.Toan;
     float L = Element.Tohopmonhoc.Ly;
     float H = Element.Tohopmonhoc.Hoa;
@@ -101,7 +138,7 @@ void Readlist(Lophoc *Class){
     for(int i=0;i<Soluong;i++){
         printf("\n");
         getchar();
-        Element = Addstudent();
+        Element = Addstudent(*Class);
         Insert(Class,Lastlist(*Class),Element);
     }
 }
@@ -197,12 +234,11 @@ void Thaydoi(Lophoc *Class){
     scanf("%d",&Select);
     if(Select==1){
         getchar();
-        Sinhvien Element = Addstudent();
+        Sinhvien Element = Addstudent(*Class);
         printf("Nhập vào vị trí cần chèn vào.\n");
         int Position;
         scanf("%d",&Position);
         Insert(Class,Position,Element);
-        printf("Đã thêm sinh viên vào danh sách.\n");
     }else if(Select==2){
         printf("Nhập mã số sinh viên cần xóa.\n");
         char ID[MAXLENGTH];
@@ -212,7 +248,6 @@ void Thaydoi(Lophoc *Class){
         while(i!=Lastlist(*Class)){
             if(strcmp(ID,Retrieve(*Class,i).Thongtin.ID)==0){
                 Delete(Class,i);
-                printf("Đã xóa sinh viên khỏi danh sách.\n");
                 return;
             }
             i = NextPosition(*Class,i);
