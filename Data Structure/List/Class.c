@@ -1,4 +1,5 @@
 #include<stdio.h>
+#include<string.h>
 #define MAXLENGTH 50
 typedef struct{
     float Toan;
@@ -104,27 +105,132 @@ void Readlist(Lophoc *Class){
         Insert(Class,Lastlist(*Class),Element);
     }
 }
+void Printelement(Lophoc Class, int Position){
+    Sinhvien Element = Retrieve(Class,Position);
+    printf("Thông tin sinh viên thứ %d\n",Position);
+    printf("    - Họ và tên: %s\n",Element.Thongtin.Ten);
+    printf("    - Mã số sinh viên: %s\n",Element.Thongtin.ID);
+    printf("    - Tuổi: %d\n",Element.Thongtin.Tuoi);
+    printf("    - Điểm số các môn học:\n");
+    printf("        + Toán: %.2f\n",Element.Tohopmonhoc.Toan);
+    printf("        + Lý: %.2f\n",Element.Tohopmonhoc.Ly);
+    printf("        + Hóa: %.2f\n",Element.Tohopmonhoc.Hoa);
+    printf("        + Điểm trung bình: %.2f\n\n",Element.Thongtin.Diemtrungbinh);
+}
 void Printlist(Lophoc Class){
     int Position = Firstlist(Class);
-    Sinhvien Element;
     while(Position!=Lastlist(Class)){
-        Element = Retrieve(Class,Position);
-        printf("Thông tin sinh viên thứ %d\n",Position);
-        printf("    - Họ và tên: %s\n",Element.Thongtin.Ten);
-        printf("    - Mã số sinh viên: %s\n",Element.Thongtin.ID);
-        printf("    - Tuổi: %d\n",Element.Thongtin.Tuoi);
-        printf("    - Điểm số các môn học:\n");
-        printf("        + Toán: %.2f\n",Element.Tohopmonhoc.Toan);
-        printf("        + Lý: %.2f\n",Element.Tohopmonhoc.Ly);
-        printf("        + Hóa: %.2f\n",Element.Tohopmonhoc.Hoa);
-        printf("        + Điểm trung bình: %.2f\n\n",Element.Thongtin.Diemtrungbinh);
+        Printelement(Class,Position);
         Position = NextPosition(Class,Position);
     }
     printf("\n");
 }
+void Swap(Sinhvien *A, Sinhvien *B){
+    Sinhvien Temp = *A;
+    *A = *B;
+    *B = Temp;
+}
+void Xephang(Lophoc *Class){
+    int i = Firstlist(*Class);
+    while(i!=Lastlist(*Class)-1){
+        Sinhvien *EF = &Class->Danhsachsinhvien[i-1];
+        int j = NextPosition(*Class,i);
+        while(j!=Lastlist(*Class)){
+            Sinhvien *EN = &Class->Danhsachsinhvien[j-1];
+            if((*EF).Thongtin.Diemtrungbinh<(*EN).Thongtin.Diemtrungbinh){
+                Swap(EF,EN);
+            }
+            j = NextPosition(*Class,j);
+        }
+        i = NextPosition(*Class,i);
+    }
+}
+void Timsinhvien(Lophoc Class){
+    getchar();
+    printf("Nhập vào mã số sinh viên cần tìm.\n");
+    char ID[MAXLENGTH];
+    gets(ID);
+    Sinhvien Element;
+    int i = Firstlist(Class);
+    while(i!=Lastlist(Class)){
+        Element = Retrieve(Class,i);
+        if(strcmp(ID,Element.Thongtin.ID)==0){
+            Printelement(Class,i);
+            return;
+        }
+        i = NextPosition(Class,i);
+    }
+    printf("Không tìm thấy sinh viên có mã số %s",ID);
+}
+void Hocluc(Lophoc Class){
+    Lophoc Nhom[4];
+    for(int i=0;i<4;i++){
+        Makenulllist(&Nhom[i]);
+    }
+    Sinhvien Element;
+    float Diem;
+    int i = Firstlist(Class);
+    while(i!=Lastlist(Class)){
+        Element = Retrieve(Class,i);
+        Diem = Element.Thongtin.Diemtrungbinh;
+        if(Diem>=9){
+            Insert(&Nhom[0],Lastlist(Nhom[0]),Element);
+        }else if(Diem>=7&&Diem<9){
+            Insert(&Nhom[1],Lastlist(Nhom[1]),Element);
+        }else if(Diem>=5&&Diem<7){
+            Insert(&Nhom[2],Lastlist(Nhom[2]),Element);
+        }else{
+            Insert(&Nhom[3],Lastlist(Nhom[3]),Element);
+        }
+        i = NextPosition(Class,i);
+    }
+    for(int i=0;i<4;i++){
+        printf("Danh sách sinh viên loại %d.\n",i+1);
+        Printlist(Nhom[i]);
+    }
+}
+void Thaydoi(Lophoc *Class){
+    printf("Bạn muốn thêm hay xóa sinh viên.\n");
+    Return:
+    printf("Nhập (1) nếu thêm, (2) nếu xóa và (-1) để thoát.\n");
+    int Selection;
+    scanf("%d",&Selection);
+    if(Selection==1){
+        getchar();
+        Sinhvien Element = Addstudent();
+        printf("Nhập vào vị trí cần chèn vào.\n");
+        int Position;
+        scanf("%d",&Position);
+        Insert(Class,Position,Element);
+        printf("Đã thêm sinh viên vào danh sách.\n");
+    }else if(Selection==2){
+        printf("Nhập mã số sinh viên cần xóa.\n");
+        char ID[MAXLENGTH];
+        getchar();
+        gets(ID);
+        int i = Firstlist(*Class);
+        while(i!=Lastlist(*Class)){
+            if(strcmp(ID,Retrieve(*Class,i).Thongtin.ID)==0){
+                Delete(Class,i);
+                printf("Đã xóa sinh viên khỏi danh sách.\n");
+                return;
+            }
+            i = NextPosition(*Class,i);
+        }
+        printf("Không tìm thấy sinh viên cần xóa.\n");
+    }else if(Selection==-1){
+        printf("Đã hủy thao tác này.\n");
+    }else{
+        printf("Bạn nhập sai thao tác, mời nhập lại.\n");
+        goto Return;
+    }
+}
 int main(int argc, char const *argv[]){
     Lophoc Class;
     Readlist(&Class);
+    printf("\n");
+    Printlist(Class);
+    Thaydoi(&Class);
     printf("\n");
     Printlist(Class);
 }
