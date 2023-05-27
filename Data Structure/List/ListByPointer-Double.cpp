@@ -239,95 +239,92 @@ void PrintListNode(LISTNODE List){
     }
 }
 int main(){
-    LISTNODE List;
-    MaleNullList(List);
-    ElementType Value;
-    int Amount,Options,Position;
-    do{
-        printf("1-Chèn Node vào đầu danh sách:\n");
-        printf("2-Chèn Node vào cuối danh sách:\n");
-        printf("3-Chèn Node vào vị trí bất kỳ:\n");
-        printf("4-Xóa Node có giá trị chỉ định:\n");
-        printf("5-Xóa Node tại vị trí chỉ định:\n");
-        printf("6-Thay thế Node vị trí số n:\n");
-        printf("7-Sắp xếp Node theo thứ tự:\n");
-        printf("8-Tìm kiếm Node trong danh sách\n");
-        printf("\nNhập vào thao tác để thực hiện:\n");
-        scanf_s("%d",&Options);
-        switch(Options){
-            case 1:
-                printf("Nhập vào số lượng Node:\n");
-                scanf_s("%d",&Amount);
-                printf("Input: ");
-                for(int i=1;i<=Amount;i++){
-                    scanf_s("%d",&Value);
-                    InsertFirst(List,Value);
-                }
-                printf("Output: ");
-                PrintListNode(List);
-                printf("\nCó %d Node\n",SizeLast(List));
-                break;
-            case 2:
-                printf("Nhập vào số lượng Node:\n");
-                scanf_s("%d",&Amount);
-                printf("Input: ");
-                for(int i=1;i<=Amount;i++){
-                    scanf_s("%d",&Value);
-                    InsertLast(List,Value);
-                }
-                printf("Output: ");
-                PrintListNode(List);
-                printf("\nCó %d Node\n",SizeLast(List));
-                break;
-            case 3:
-                printf("Nhập vào chỉ số cần chèn\n");
-                scanf_s("%d",&Position);
-                printf("Nhập vào số lượng Node:\n");
-                scanf_s("%d",&Amount);
-                printf("Input: ");
-                for(int i=1;i<=Amount;i++){
-                    scanf_s("%d",&Value);
-                    InsertMid(List,Value,Position);
-                }
-                printf("Output: ");
-                PrintListNode(List);
-                printf("\nCó %d Node\n",SizeLast(List));
-                break;
-            case 4:
-                printf("Nhập vào giá trị cần xóa\n");
-                scanf_s("%d",&Value);
-                RemoveNodeByValue(List,Value);
-                printf("Output: ");
-                PrintListNode(List);
-                printf("\nCó %d Node\n",SizeLast(List));
-                break;
-            case 5:
-                printf("Nhập vào vị trí cần xóa\n");
-                scanf_s("%d",&Position);
-                RemoveNodeByPosition(List,Position);
-                printf("Output: ");
-                PrintListNode(List);
-                printf("\nCó %d Node\n",SizeLast(List));
-                break;
-            case 6:
-                printf("Nhập vào vị trí cần thay đổi:\n");
-                scanf_s("%d",&Position);
-                printf("Nhập vào giá trị thay thế\n");
-                scanf_s("%d",&Value);
-                ReplaceNode(List,Position,Value);
-                printf("Output: ");
-                PrintListNode(List);
-                printf("\nCó %d Node\n",SizeLast(List));
-                break;
-            case 7:
-                SortListNode(List);
-                PrintListNode(List);
-                printf("\nCó %d Node\n",SizeLast(List));
-                break;
-            case 0:
-                FreeMemoryListNode(List);
-                break;
-        }
-        printf("\n\n");
-    }while(Options!=0);
+    LISTNODE List;MaleNullList(List);
+    int Select,Position,Number,Value;
+    Root:
+    printf("1-Chèn Node vào đầu danh sách:\n");
+    printf("2-Chèn Node vào cuối danh sách:\n");
+    printf("3-Chèn Node vào vị trí bất kỳ:\n");
+    printf("4-Xóa Node có giá trị chỉ định:\n");
+    printf("5-Xóa Node tại vị trí chỉ định:\n");
+    printf("6-Thay thế Node vị trí số n:\n");
+    printf("7-Sắp xếp Node theo thứ tự:\n");
+    printf("8-Tìm kiếm Node trong danh sách\n");
+    printf("\nNhập vào thao tác để thực hiện:\n");;
+    scanf("%d",&Select);
+    switch(Select){
+        case 1:
+            printf("Nhập vào số lượng Node:\n");
+            scanf("%d",&Number);
+            printf("Input: ");
+            for(int i=1;i<=Number;i++){
+                scanf("%d",&Value);
+                InsertFirst(List,Value);
+            }
+            printf("Output: ");
+            PrintListNode(List);
+            printf("\nCó %d Node\n",SizeLast(List));
+            break;
+        case 2:
+            printf("Nhập vào số lượng Node:\n");
+            scanf("%d",&Number);
+            printf("Input: ");
+            for(int i=1;i<=Number;i++){
+                scanf("%d",&Value);
+                InsertLast(List,Value);
+            }
+            printf("Output: ");
+            PrintListNode(List);
+            printf("\nCó %d Node\n",SizeLast(List));
+            break;
+        case 3:
+            printf("Nhập vào chỉ số cần chèn\n");
+            scanf("%d",&Position);
+            printf("Nhập vào số lượng Node:\n");
+            scanf("%d",&Number);
+            printf("Input: ");
+            for(int i=1;i<=Number;i++){
+                scanf("%d",&Value);
+                InsertMid(List,Value,Position);
+            }
+            printf("Output: ");
+            PrintListNode(List);
+            printf("\nCó %d Node\n",SizeLast(List));
+            break;
+        case 4:
+            printf("Nhập vào giá trị cần xóa\n");
+            scanf("%d",&Value);
+            RemoveNodeByValue(List,Value);
+            printf("Output: ");
+            PrintListNode(List);
+            printf("\nCó %d Node\n",SizeLast(List));
+            break;
+        case 5:
+            printf("Nhập vào vị trí cần xóa\n");
+            scanf("%d",&Position);
+            RemoveNodeByPosition(List,Position);
+            printf("Output: ");
+            PrintListNode(List);
+            printf("\nCó %d Node\n",SizeLast(List));
+            break;
+        case 6:
+            printf("Nhập vào vị trí cần thay đổi:\n");
+            scanf("%d",&Position);
+            printf("Nhập vào giá trị thay thế\n");
+            scanf("%d",&Value);
+            ReplaceNode(List,Position,Value);
+            printf("Output: ");
+            PrintListNode(List);
+            printf("\nCó %d Node\n",SizeLast(List));
+            break;
+        case 7:
+            SortListNode(List);
+            PrintListNode(List);
+            printf("\nCó %d Node\n",SizeLast(List));
+            break;
+        case 0:
+            FreeMemoryListNode(List);
+            break;
+    }
+    if(Select!=0) goto Root;
 }
